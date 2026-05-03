@@ -41,7 +41,7 @@ nonisolated struct Character: Identifiable, Sendable, Hashable {
     let imageURL: URL?
     let episodeIDs: [Int]
     
-    let createdDate: Date
+    let createdDate: Date?
     let syncronizedDate: Date
     
     init(id: Int,
@@ -54,7 +54,7 @@ nonisolated struct Character: Identifiable, Sendable, Hashable {
          location: CharacterPlace,
          imageURL: URL?,
          episodeIDs: [Int],
-         createdDate: Date,
+         createdDate: Date?,
          syncronizedDate: Date) {
         
         self.id = id
