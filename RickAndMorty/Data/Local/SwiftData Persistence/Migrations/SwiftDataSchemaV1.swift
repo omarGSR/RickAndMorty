@@ -12,8 +12,8 @@ enum SwiftDataSchemaV1: VersionedSchema {
 
     static var models: [any PersistentModel.Type] {
         [
-    //        CharacterEntity.self,
-    //        PageInfoEntity.self
+            CharacterEntity.self,
+            PageInfoEntity.self
         ]
     }
 }
