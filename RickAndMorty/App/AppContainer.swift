@@ -21,15 +21,20 @@ final class AppContainer {
     
     let networkMonitor: NWPathNetworkMonitor
     let apiClient: AlamofireAPIClient
+    let persistenceDataBase: PersistenceDataSource
     
     private init(environment: EnvironmentServer = AppContainer.initialEnvironment,
                  networkMonitor: NWPathNetworkMonitor = .shared) {
+        
+        let swiftDataManager: SwiftDataManager = .shared
         
         self.environment = environment
         self.networkMonitor = networkMonitor
         
         self.apiClient = AlamofireAPIClient(environment: environment,
                                             monitor: networkMonitor)
+        
+        self.persistenceDataBase = SwiftDataSource(context: swiftDataManager.context)
     }
     
     func setEnvironment(_ environment: EnvironmentServer) {
@@ -40,7 +45,8 @@ final class AppContainer {
     // MARK: - Make repositories / Datasources 
     
     func makeCharacterRepository() -> CharacterRepository {
-        RickAndMortyCharacterRepository(remoteDataSource: makeCharacterRemoteDataSource())
+        RickAndMortyCharacterRepository(remoteDataSource: makeCharacterRemoteDataSource(),
+                                        localDataSource: persistenceDataBase)
     }
     
     func makeCharacterRemoteDataSource() -> CharacterRemoteDataSource {
