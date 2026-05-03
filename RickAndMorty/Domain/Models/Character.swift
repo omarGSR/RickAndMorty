@@ -89,6 +89,14 @@ nonisolated enum CharacterStatus: String {
     case alive
     case dead
     case unknown
+    
+    var display: String {
+        switch self {
+        case .alive: return "chm_status_alive".localized
+        case .dead: return "chm_status_dead".localized
+        case .unknown: return "gUnknown".localized
+        }
+    }
 }
 
 nonisolated enum CharacterGender: String {
@@ -96,5 +104,14 @@ nonisolated enum CharacterGender: String {
     case male
     case genderless
     case unknown
+    
+    var display: String {
+        switch self {
+        case .female: return "chm_gender_female".localized
+        case .male: return "chm_gender_male".localized
+        case .genderless: return "chm_gender_genderless".localized
+        case .unknown: return "gUnknown".localized
+        }
+    }
 }
 
