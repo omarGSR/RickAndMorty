@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A92A5252FA7B449009AED4F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1A92A5242FA7B449009AED4F /* README.md */; };
+		1AEB2F532FA7C1310035DEFA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1AEB2F522FA7C1310035DEFA /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AEB2F532FA7C1310035DEFA /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +170,7 @@
 			);
 			name = RickAndMorty;
 			packageProductDependencies = (
+				1AEB2F522FA7C1310035DEFA /* Alamofire */,
 			);
 			productName = RickAndMorty;
 			productReference = 1A92A4662FA7B0A4009AED4F /* RickAndMorty.app */;
@@ -251,6 +254,9 @@
 			);
 			mainGroup = 1A92A45D2FA7B0A3009AED4F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1AEB2F512FA7C1310035DEFA /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1A92A4672FA7B0A4009AED4F /* Products */;
 			projectDirPath = "";
@@ -641,6 +647,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1AEB2F512FA7C1310035DEFA /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1AEB2F522FA7C1310035DEFA /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1AEB2F512FA7C1310035DEFA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1A92A45E2FA7B0A3009AED4F /* Project object */;
 }
