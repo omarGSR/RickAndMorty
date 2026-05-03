@@ -3,7 +3,7 @@
 //g: generals
 "gOK" = "OK";
 "gCancel" = "Cancel";
-"gUnknown" = "Unknow";
+"gUnknown" = "Unknown";
 
 //errors:
 "gError_description" = "Something went wrong";
@@ -13,3 +13,12 @@
 "apiError_empty_response" = "Empty response or not data";
 "apiError_not_intenet" = "Not internet conection";
 "apiError_invalid_url" = "Invalid url";
+
+// MODELS --------------------
+// chm: Character_Model
+"chm_status_alive" = "Alive";
+"chm_status_dead" = "Dead";
+
+"chm_gender_female" = "Female";
+"chm_gender_male" = "Male";
+"chm_gender_genderless" = "Genderless";
