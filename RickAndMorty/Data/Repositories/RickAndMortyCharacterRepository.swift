@@ -8,21 +8,26 @@
 final class RickAndMortyCharacterRepository: CharacterRepository {
     
     private let remoteDataSource: CharacterRemoteDataSource
+    private let localDataSource: PersistenceDataSource
     
-    init(remoteDataSource: CharacterRemoteDataSource) {
+    init(remoteDataSource: CharacterRemoteDataSource,
+         localDataSource: PersistenceDataSource) {
+        
         self.remoteDataSource = remoteDataSource
+        self.localDataSource = localDataSource
     }
     
     func fetchCharacter(page: Int) async throws -> PageResults<Character> {
         let response = try await remoteDataSource.fetchCharacter(page: page)
         let pageResult = response.toDomain(currentPage: page)
-
+        
+        #warning("TODO: need to save in local")
+        
         return pageResult
     }
     
     func localCharacters() async throws -> [Character] {
-#warning("TODO: need implement Persistence data base")
-        return []
+        try await localDataSource.getCharacters()
     }
 }
 
