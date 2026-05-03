@@ -1,0 +1,15 @@
+// Base strings (EN)
+
+//g: generals
+"gOK" = "OK";
+"gCancel" = "Cancel";
+"gUnknown" = "Unknow";
+
+//errors:
+"gError_description" = "Something went wrong";
+
+"apiError_title" = "Error on response";
+"apiError_invalid_Format" = "Invalid format";
+"apiError_empty_response" = "Empty response or not data";
+"apiError_not_intenet" = "Not internet conection";
+"apiError_invalid_url" = "Invalid url";
