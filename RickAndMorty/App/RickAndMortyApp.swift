@@ -15,7 +15,9 @@ struct RickAndMortyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TestContentView()
+            //TestContentView()
+            let vm = CharacterListVM(characterRepository: AppContainer.shared.makeCharacterRepository())
+            CharacterListView(viewModel: vm)
         }
     }
 }
