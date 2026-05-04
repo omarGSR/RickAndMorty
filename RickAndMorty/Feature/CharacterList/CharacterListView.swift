@@ -36,6 +36,8 @@ struct CharacterListView: View {
                 ForEach(viewModel.characters) { character in
                     CharacterRowView(character: character)
                 }
+                
+                footerListPagination
             }
             
         case .idle, .fetchFirstRemote:
@@ -53,6 +55,38 @@ struct CharacterListView: View {
                 }
             }
             .padding(Spacing.regular)
+        }
+    }
+    
+    @ViewBuilder
+    private var footerListPagination: some View {
+        
+        if viewModel.isPaginationAvailable {
+            
+            if !viewModel.isConectionReachable ||
+                viewModel.forceShowButtonLoadMore {
+                
+                HStack {
+                    Spacer()
+                    Button("clv_load_more_pages") {
+                        Task {
+                            await viewModel.fetchNextRemotePage()
+                        }
+                    }
+                    Spacer()
+                }
+            }
+            else {
+                HStack {
+                    LoadingSpinner()
+                        .id(viewModel.currentPage)
+                }
+                .onScrollVisibilityChange { isVisible in
+                    Task {
+                        await viewModel.fetchNextRemotePage()
+                    }
+                }
+            }
         }
     }
 }
