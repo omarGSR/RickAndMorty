@@ -20,13 +20,14 @@ struct CharacterListView: View {
             content
                 .navigationTitle("clv_title")
         }
+        .errorAlert(error: $viewModel.errorAlert)
         .onAppear {
             Task {
                 await viewModel.loadInitialValues()
             }
         }
     }
-
+    
     @ViewBuilder
     private var content: some View {
         switch viewModel.stateView {
@@ -36,11 +37,13 @@ struct CharacterListView: View {
                 ForEach(viewModel.characters) { character in
                     CharacterRowView(character: character)
                 }
+                
+                footerListPagination
             }
             
         case .idle, .fetchFirstRemote:
             
-            ProgressViewWrapper()
+            LoadingSpinner()
             
         case .errorStateView:
             
@@ -53,6 +56,38 @@ struct CharacterListView: View {
                 }
             }
             .padding(Spacing.regular)
+        }
+    }
+    
+    @ViewBuilder
+    private var footerListPagination: some View {
+        
+        if viewModel.isPaginationAvailable {
+            
+            if !viewModel.isConectionReachable ||
+                viewModel.forceShowButtonLoadMore {
+                
+                HStack {
+                    Spacer()
+                    Button("clv_load_more_pages") {
+                        Task {
+                            await viewModel.fetchNextRemotePage()
+                        }
+                    }
+                    Spacer()
+                }
+            }
+            else {
+                HStack {
+                    LoadingSpinner()
+                        .id(viewModel.currentPage)
+                }
+                .onScrollVisibilityChange { isVisible in
+                    Task {
+                        await viewModel.fetchNextRemotePage()
+                    }
+                }
+            }
         }
     }
 }

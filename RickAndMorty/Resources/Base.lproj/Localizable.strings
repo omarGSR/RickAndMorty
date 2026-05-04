@@ -16,6 +16,7 @@
 "apiError_not_intenet_title" = "Not internet";
 "apiError_not_intenet_message" = "Please check your connection and try again";
 "apiError_invalid_url" = "Invalid url";
+"apiError_too_many_request" = "Server little busy.\n\nPlease try again after few seconds";
 
 // MODELS--------------------
 // chm: Character_Model
@@ -32,5 +33,6 @@
 // SCREENS_TEXT -------------
 // clv: Character_list_view
 "clv_title" = "Rick And Morty";
+"clv_load_more_pages" = "Load more";
 
 

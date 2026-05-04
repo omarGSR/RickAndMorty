@@ -75,9 +75,11 @@ final class AppContainer {
     // MARK: - ViewModels for screens
     
     func makeCharacterListVM() -> CharacterListVM {
-        CharacterListVM(characterRepository: makeCharacterRepository())
+        CharacterListVM(
+            characterRepository: makeCharacterRepository(),
+            networkMonitor: networkMonitor)
     }
-   
+    
     // MARK: - Make repositories / Datasources
     
     func makeCharacterRepository() -> CharacterRepository {
@@ -89,4 +91,3 @@ final class AppContainer {
         RickAndMortyCharacterRemoteDataSource(apiClient: apiClient)
     }
 }
-
