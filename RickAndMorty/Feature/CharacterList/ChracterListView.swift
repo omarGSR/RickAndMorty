@@ -40,7 +40,7 @@ struct CharacterListView: View {
             
         case .idle, .fetchFirstRemote:
             
-            ProgressViewWapper()
+            ProgressViewWrapper()
             
         case .errorStateView:
             

@@ -10,8 +10,9 @@ import Foundation
 enum Spacing {
     static let regular: CGFloat = 16
     static let half: CGFloat = Spacing.regular * 0.5
+    static let double: CGFloat = Spacing.regular * 2
 }
 
 enum Radius {
-    static let rectangular: CGFloat = 20
+    static let card: CGFloat = 20
 }

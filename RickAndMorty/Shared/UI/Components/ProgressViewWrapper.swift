@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProgressViewWapper: View {
+struct ProgressViewWrapper: View {
     var body: some View {
         VStack {
             ProgressView()
@@ -16,5 +16,5 @@ struct ProgressViewWapper: View {
 }
 
 #Preview {
-    ProgressViewWapper()
+    ProgressViewWrapper()
 }

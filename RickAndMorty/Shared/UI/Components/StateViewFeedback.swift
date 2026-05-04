@@ -68,7 +68,7 @@ struct StateViewFeedback: View {
         .padding()
         .frame(maxWidth: .infinity)
         .background(.secondary.opacity(0.3))
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .clipShape(RoundedRectangle(cornerRadius: Radius.card))
     }
     
 }
