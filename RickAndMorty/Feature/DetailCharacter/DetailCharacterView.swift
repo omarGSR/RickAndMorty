@@ -26,6 +26,7 @@ struct DetailCharacterView: View {
                 .padding(.top, -Spacing.regular)
             sectionSync
                 .padding(.top, -Spacing.regular)
+                .padding(.bottom, Spacing.regular)
             
             Spacer()
         }
@@ -45,7 +46,7 @@ struct DetailCharacterView: View {
             Text(viewModel.displaySpecies)
                 .descriptionItemStyle(color: .primary)
             
-            Text("chm_display_status".localized([viewModel.displayStatus]))
+            Text(viewModel.displayStatus)
                 .descriptionItemStyle()
         }
         .padding(Spacing.regular)
@@ -56,15 +57,21 @@ struct DetailCharacterView: View {
         GroupBox {
             VStack(alignment: .leading, spacing: verticalSectionSpacing) {
                 
-                Text("_gender: Male")
-                Text("_participate in 88 episodes")
-                Text("_create at: Juny 20226")
+                Spacer()
+                
+                Text(viewModel.displayGender)
+                    .descriptionItemStyle(color: .primary)
+                Text(viewModel.displayParticipatedEpisodes)
+                    .descriptionItemStyle(color: .primary)
+                Text(viewModel.displayCreatedAt)
+                    .descriptionItemStyle(color: .primary)
             }
             .padding(.leading, Spacing.regular)
             .frame(maxWidth: .infinity, alignment: .leading)
             
         } label : {
-            Text("_info")
+            Text("cdv_info_section")
+                .titleItemStyle(color: .secondary)
         }
         .padding(Spacing.regular)
     }
@@ -73,19 +80,29 @@ struct DetailCharacterView: View {
         
         GroupBox {
             VStack(alignment: .leading, spacing: verticalSectionSpacing) {
+                Spacer()
                 
-                Text("_original from:")
-                Text("unknow")
+                Text("cdv_location_origin")
+                    .descriptionItemStyle()
+                
+                Text(viewModel.displayOriginLocation)
+                    .descriptionItemStyle(color: .primary)
                     .frame(maxWidth: .infinity, alignment: .center)
-                Text("_current:")
-                Text("unknow")
+                
+                Spacer()
+                Text("cdv_location_current")
+                    .descriptionItemStyle()
+                
+                Text(viewModel.displayCurrentLocation)
+                    .descriptionItemStyle(color: .primary)
                     .frame(maxWidth: .infinity, alignment: .center)
             }
             .padding(.leading, Spacing.regular)
             .frame(maxWidth: .infinity, alignment: .leading)
             
         } label : {
-            Text("_location")
+            Text("cdv_location_section")
+                .titleItemStyle(color: .secondary)
             
         }
         .padding(Spacing.regular)
@@ -105,11 +122,11 @@ struct DetailCharacterView: View {
             .padding(.leading, Spacing.regular)
             
         } label : {
-            Text("_last syncronized 23/5/20026")
+            Text(viewModel.displaySyncronizedAt)
+                .titleItemStyle(color: .secondary)
             
         }
         .padding(Spacing.regular)
-        
     }
 }
 
