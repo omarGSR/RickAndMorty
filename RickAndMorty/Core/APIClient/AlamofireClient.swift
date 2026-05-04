@@ -79,7 +79,15 @@ final class AlamofireAPIClient: APIClient {
             .serializingDecodable(T.self)
             .response
         
-        if let error = response.error { throw error }
+        if let error = response.error {
+            if let urlError = error.underlyingError as? URLError,
+               urlError.code == .notConnectedToInternet {
+                
+                throw APIError.notInternet
+            }
+        
+            throw error
+        }
         
         guard let value = response.value else {
             throw APIError.emptyResponse
