@@ -27,7 +27,7 @@ struct CharacterRowView: View {
                 Text("chm_display_status".localized([character.status.display]))
                     .descriptionItemStyle()
                 
-                Text("chm_display_create_at".localized([character.displayCreated]))
+                Text("chm_display_created_at".localized([character.displayCreated]))
                     .descriptionItemStyle()
             }
         }
