@@ -4,14 +4,17 @@
 "gOK" = "OK";
 "gCancel" = "Cancel";
 "gUnknown" = "Unknown";
+"gRetry" = "Retry";
 
 //errors:
 "gError_description" = "Something went wrong";
+"gError_title" = "Error";
 
 "apiError_title" = "Error on response";
 "apiError_invalid_Format" = "Invalid format";
 "apiError_empty_response" = "Empty response or not data";
-"apiError_not_intenet" = "Not internet conection";
+"apiError_not_intenet_title" = "Not internet";
+"apiError_not_intenet_message" = "Please check your connection and try again";
 "apiError_invalid_url" = "Invalid url";
 
 // MODELS --------------------

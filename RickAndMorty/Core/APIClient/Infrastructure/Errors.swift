@@ -19,7 +19,7 @@ enum APIError: Error, LocalizedError {
         case .emptyResponse:
             return "apiError_empty_response".localized
         case .notInternet:
-            return "apiError_not_intenet".localized
+            return "apiError_not_intenet_message".localized
         }
     }
 }
