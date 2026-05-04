@@ -72,7 +72,13 @@ final class AppContainer {
         apiClient.setEnvironment(environment)
     }
     
-    // MARK: - Make repositories / Datasources 
+    // MARK: - ViewModels for screens
+    
+    func makeCharacterListVM() -> CharacterListVM {
+        CharacterListVM(characterRepository: makeCharacterRepository())
+    }
+   
+    // MARK: - Make repositories / Datasources
     
     func makeCharacterRepository() -> CharacterRepository {
         RickAndMortyCharacterRepository(remoteDataSource: makeCharacterRemoteDataSource(),
