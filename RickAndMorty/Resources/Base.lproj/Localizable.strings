@@ -26,6 +26,11 @@
 "chm_gender_male" = "Male";
 "chm_gender_genderless" = "Genderless";
 
+"chm_display_create_at" = "Created at %@";
+"chm_display_status" = "Status %@";
+
 // SCREENS_TEXT -------------
 // clv: Character_list_view
 "clv_title" = "Rick And Morty";
+
+

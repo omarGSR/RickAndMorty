@@ -14,4 +14,11 @@ enum DateParserFormatter {
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         return formatter
     }()
+    
+    nonisolated static let prettyDate: DateFormatter = {
+       let formatter = DateFormatter()
+        formatter.locale = .current
+        formatter.setLocalizedDateFormatFromTemplate("d MMMM yyyy")
+        return formatter
+    }()
 }

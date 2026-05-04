@@ -55,9 +55,13 @@ final class AlamofireAPIClient: APIClient {
     
     func request<T: Decodable & Sendable> (_ endpoint: Endpoint) async throws -> T {
         
+        #if DEBUG
+            // Note: NWPath is having few issues in simulator, for now we will avoid this comprobation in order to check turn ON/OFF Wi-fi access retry buttons
+        #else
         guard hasInternetConnection() else {
             throw APIError.notInternet
         }
+        #endif
                 
         let url: URL = try endpoint.makeURL(for: environment.baseURL)
         let timeout: TimeInterval = endpoint.timeout.value

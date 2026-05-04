@@ -23,7 +23,7 @@ nonisolated struct Character: Identifiable, Sendable, Hashable {
         
         let textSpecies: String = species.isEmpty ? "gUnknown".localized : species
         let typeSpecies: String = {
-            guard let type else { return "" }
+            guard let type, !type.isEmpty else { return "" }
             return " (\(type))"
         }()
         
@@ -42,6 +42,11 @@ nonisolated struct Character: Identifiable, Sendable, Hashable {
     let episodeIDs: [Int]
     
     let createdDate: Date?
+    var displayCreated: String {
+        guard let date = createdDate else { return "" }
+        return DateParserFormatter.prettyDate.string(from: date)
+    }
+    
     let syncronizedDate: Date
     
     init(id: Int,
