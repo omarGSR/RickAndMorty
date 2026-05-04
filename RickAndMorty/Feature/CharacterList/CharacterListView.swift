@@ -34,7 +34,7 @@ struct CharacterListView: View {
             
             List {
                 ForEach(viewModel.characters) { character in
-                    Text(character.name)
+                    CharacterRowView(character: character)
                 }
             }
             
