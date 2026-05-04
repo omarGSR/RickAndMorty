@@ -39,11 +39,20 @@ final class AuthInterceptor: RequestInterceptor {
                dueTo error: Error,
                completion: @escaping (RetryResult) -> Void) {
         
-        if let response = request.response, response.statusCode == 401 {
-            completion(.doNotRetry)
-            return
+        if let response = request.response {
+            
+            if  response.statusCode == 401 {
+                completion(.doNotRetry)
+                return
+            }
+            
+            #warning("Confirm with BE-team if that its apropiated or is better to remove becouse time delay needs higher or impredictable")
+            if response.statusCode == 429, request.retryCount < 2 {
+                completion(.retryWithDelay(3))
+                return
+            }
         }
-        
+    
         let maxRetries = Int(request.request?.value(forHTTPHeaderField: "X-Max-Retries") ?? "") ?? 0
         
         if request.retryCount < maxRetries,
