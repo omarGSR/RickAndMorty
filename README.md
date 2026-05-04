@@ -36,13 +36,14 @@ And to prevent delays in App Store releases, the app will be developed and deliv
 - RM-2: Networking layer and RickyAndMorty initial endpoints
 - RM-3: Initial Domain models and DTO mapping
 - RM-4: SwiftData persistence (Manager+Migration+first entities)
-- RM-5: List characters
-- RM-6: Characters pagination + UI
-- RM-7: Detail character
+- RM-5: Cached images
+- RM-6: List characters
+- RM-7: Characters pagination + UI
+- RM-8: Detail character
 
 - 🚀 RELEASE-1: Version 1.0 - List and Detail
 
-- RM-8: Search local character
+- RM-9: Search local character
 
 - 🚀 RELEASE-2: Version 1.1 - Local Search characters
 
