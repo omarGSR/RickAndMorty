@@ -27,13 +27,13 @@ struct StateViewFeedback: View {
         self.action = action
     }
     
-    init(error: Error,
+    init(error: Error?,
          buttonTitle: String?,
          action: (() -> Void)?) {
         
-        self.init(icon: error.icon,
-                  title: error.titleLocalized,
-                  message: error.localizedDescription,
+        self.init(icon: error?.icon,
+                  title: error?.titleLocalized ?? "gError_title",
+                  message: error?.localizedDescription ?? "gError_description".localized,
                   buttonTitle: buttonTitle?.localized,
                   action: action)
     }
