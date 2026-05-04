@@ -33,18 +33,21 @@ We will work assuming tickets/task as Scrum project (RM: tasks, sub-tasks).
 And to prevent delays in App Store releases, the app will be developed and delivered in small (RELEASE), self-contained functional increments, enabling continuos progress toward full feature completion
 
 - RM-1: Project setup and base architecture
-    - RM-2: Networking layer and RickyAndMorty initial endpoints
-    - RM-3: Initial Domain models and DTO mapping
-    - RM-4: SwiftData persistence (Manager+Migration+first entities)
-
-- RM-5: List characters
-    RM-6: characters endpoint pagination + UI
-    
-- RM-7: Detail character
+- RM-2: Networking layer and RickyAndMorty initial endpoints
+- RM-3: Initial Domain models and DTO mapping
+- RM-4: SwiftData persistence (Manager+Migration+first entities)
+- RM-5: Cached images
+- RM-6: List characters
+    - RM-7: Characters pagination + UI
+- RM-8: Detail character
+- RM-9: Test
+    - Repository
+    - Persistence
+    - ListVM
 
 - 🚀 RELEASE-1: Version 1.0 - List and Detail
 
-- RM-8: Search local character
+- RM-10: Search local character
 
 - 🚀 RELEASE-2: Version 1.1 - Local Search characters
 

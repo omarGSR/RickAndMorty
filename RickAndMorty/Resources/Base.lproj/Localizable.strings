@@ -1,0 +1,47 @@
+// Base strings (EN)
+
+//g: GENERAL----------------
+"gOK" = "OK";
+"gCancel" = "Cancel";
+"gUnknown" = "Unknown";
+"gRetry" = "Retry";
+
+//ERRORS--------------
+"gError_description" = "Something went wrong";
+"gError_title" = "Error";
+
+"apiError_title" = "Error on response";
+"apiError_invalid_Format" = "Invalid format";
+"apiError_empty_response" = "Empty response or not data";
+"apiError_not_intenet_title" = "Not internet";
+"apiError_not_intenet_message" = "Please check your connection and try again";
+"apiError_invalid_url" = "Invalid url";
+"apiError_too_many_request" = "Server little busy.\n\nPlease try again after few seconds";
+
+// MODELS--------------------
+// chm: Character_Model
+"chm_status_alive" = "Alive";
+"chm_status_dead" = "Dead";
+
+"chm_gender_female" = "Female";
+"chm_gender_male" = "Male";
+"chm_gender_genderless" = "Genderless";
+
+"chm_display_created_at" = "Created at %@";
+"chm_display_syncronized_at" = "Last update %@";
+"chm_display_status" = "Status %@";
+"chm_display_participated_episodes" = "Participating in %d episodes";
+"chm_display_gender" = "Gender %@";
+
+// SCREENS_TEXT -------------
+// clv: Character_list_view
+"clv_title" = "Rick And Morty";
+"clv_load_more_pages" = "Load more";
+
+// cdv: Character_detail_view
+"cdv_info_section" = "Information";
+"cdv_location_section" = "Location";
+"cdv_location_origin" = "Originally from";
+"cdv_location_current" = "Current in";
+
+
