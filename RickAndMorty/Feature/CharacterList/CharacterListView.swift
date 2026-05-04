@@ -20,13 +20,14 @@ struct CharacterListView: View {
             content
                 .navigationTitle("clv_title")
         }
+        .errorAlert(error: $viewModel.errorAlert)
         .onAppear {
             Task {
                 await viewModel.loadInitialValues()
             }
         }
     }
-
+    
     @ViewBuilder
     private var content: some View {
         switch viewModel.stateView {
