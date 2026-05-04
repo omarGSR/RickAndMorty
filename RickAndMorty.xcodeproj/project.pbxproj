@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A92A5252FA7B449009AED4F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1A92A5242FA7B449009AED4F /* README.md */; };
 		1AEB2F532FA7C1310035DEFA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1AEB2F522FA7C1310035DEFA /* Alamofire */; };
+		1AEB31272FA888310035DEFA /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 1AEB31262FA888310035DEFA /* NukeUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AEB2F532FA7C1310035DEFA /* Alamofire in Frameworks */,
+				1AEB31272FA888310035DEFA /* NukeUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +173,7 @@
 			name = RickAndMorty;
 			packageProductDependencies = (
 				1AEB2F522FA7C1310035DEFA /* Alamofire */,
+				1AEB31262FA888310035DEFA /* NukeUI */,
 			);
 			productName = RickAndMorty;
 			productReference = 1A92A4662FA7B0A4009AED4F /* RickAndMorty.app */;
@@ -256,6 +259,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				1AEB2F512FA7C1310035DEFA /* XCRemoteSwiftPackageReference "Alamofire" */,
+				1AEB31252FA888310035DEFA /* XCRemoteSwiftPackageReference "Nuke" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1A92A4672FA7B0A4009AED4F /* Products */;
@@ -657,6 +661,14 @@
 				minimumVersion = 5.11.2;
 			};
 		};
+		1AEB31252FA888310035DEFA /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.0.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -664,6 +676,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1AEB2F512FA7C1310035DEFA /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		1AEB31262FA888310035DEFA /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1AEB31252FA888310035DEFA /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
