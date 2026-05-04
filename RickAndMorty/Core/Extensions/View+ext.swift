@@ -13,10 +13,10 @@ extension View {
     // MARK: - Alerts
     
     func errorAlert(error: Binding<Error?>,
-                    title: String = "gErrorTitle") -> some View {
+                    title: String? = nil) -> some View {
         
         self.alert(
-            title.localized,
+            title?.localized ?? error.wrappedValue?.titleLocalized ?? "gError_title".localized,
             isPresented: Binding(
                 get: { error.wrappedValue != nil },
                 set: { newValue in

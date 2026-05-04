@@ -24,11 +24,18 @@ final class RickAndMortyCharacterRepository: CharacterRepository {
         
         try await localDataSource.saveCharacters(pageResult.items)
         
+        if let pageInfo = pageResult.pageInfo {
+            try await localDataSource.saveCharactersPageInfo(pageInfo)
+        }
+        
         return pageResult
     }
     
     func localCharacters() async throws -> [Character] {
         try await localDataSource.getCharacters()
     }
+    
+    func localCharactersPageInfo() async throws -> PageInfo? {
+        try await localDataSource.getCharactersPageInfo()
+    }
 }
-

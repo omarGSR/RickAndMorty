@@ -55,9 +55,13 @@ final class AlamofireAPIClient: APIClient {
     
     func request<T: Decodable & Sendable> (_ endpoint: Endpoint) async throws -> T {
         
+        #if DEBUG
+            // Note: NWPath is having few issues in simulator, for now we will avoid this comprobation in order to check turn ON/OFF Wi-fi access retry buttons
+        #else
         guard hasInternetConnection() else {
             throw APIError.notInternet
         }
+        #endif
                 
         let url: URL = try endpoint.makeURL(for: environment.baseURL)
         let timeout: TimeInterval = endpoint.timeout.value
@@ -79,12 +83,64 @@ final class AlamofireAPIClient: APIClient {
             .serializingDecodable(T.self)
             .response
         
-        if let error = response.error { throw error }
+        if let error = response.error {
+            
+            if let afError = error.asAFError {
+                switch afError {
+                case .responseValidationFailed(reason: .unacceptableStatusCode(let code)):
+                    if code == 429 {
+                        throw APIError.tooManyRequests
+                    }
+
+                default:
+                    break
+                }
+            }
+            
+            if let urlError = error.underlyingError as? URLError {
+                
+                if urlError.code == .notConnectedToInternet {
+                
+                    throw APIError.notInternet
+                }
+            }
+        
+            throw error
+        }
         
         guard let value = response.value else {
             throw APIError.emptyResponse
         }
         
         return value
+    }
+    
+    private func handlerParseError(_ error: Error) throws {
+        
+        if let afError = error.asAFError {
+            switch afError {
+            case .responseValidationFailed(reason: .unacceptableStatusCode(let code)):
+                if code == 429 {
+                    throw APIError.tooManyRequests
+                }
+
+            default:
+                break
+            }
+
+            if let urlError = afError.underlyingError as? URLError {
+                
+                switch urlError.code {
+                case .notConnectedToInternet:
+                    throw APIError.notInternet
+                default:
+                    throw error
+                    
+                }
+            }
+        }
+    
+        throw error
+        
     }
 }
