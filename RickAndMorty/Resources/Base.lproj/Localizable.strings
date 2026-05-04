@@ -33,5 +33,6 @@
 // SCREENS_TEXT -------------
 // clv: Character_list_view
 "clv_title" = "Rick And Morty";
+"clv_load_more_pages" = "Load more";
 
 
