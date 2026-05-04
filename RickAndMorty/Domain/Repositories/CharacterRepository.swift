@@ -8,4 +8,5 @@
 protocol CharacterRepository {
     func fetchCharacter(page: Int) async throws -> PageResults<Character>
     func localCharacters() async throws -> [Character]
+    func localCharactersPageInfo() async throws -> PageInfo?
 }
