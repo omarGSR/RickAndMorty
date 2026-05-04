@@ -40,10 +40,14 @@ And to prevent delays in App Store releases, the app will be developed and deliv
 - RM-6: List characters
     - RM-7: Characters pagination + UI
 - RM-8: Detail character
+- RM-9: Test
+    - Repository
+    - Persistence
+    - ListVM
 
 - 🚀 RELEASE-1: Version 1.0 - List and Detail
 
-- RM-9: Search local character
+- RM-10: Search local character
 
 - 🚀 RELEASE-2: Version 1.1 - Local Search characters
 
