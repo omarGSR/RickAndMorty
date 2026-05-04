@@ -84,10 +84,25 @@ final class AlamofireAPIClient: APIClient {
             .response
         
         if let error = response.error {
-            if let urlError = error.underlyingError as? URLError,
-               urlError.code == .notConnectedToInternet {
+            
+            if let afError = error.asAFError {
+                switch afError {
+                case .responseValidationFailed(reason: .unacceptableStatusCode(let code)):
+                    if code == 429 {
+                        throw APIError.tooManyRequests
+                    }
+
+                default:
+                    break
+                }
+            }
+            
+            if let urlError = error.underlyingError as? URLError {
                 
-                throw APIError.notInternet
+                if urlError.code == .notConnectedToInternet {
+                
+                    throw APIError.notInternet
+                }
             }
         
             throw error
@@ -98,5 +113,34 @@ final class AlamofireAPIClient: APIClient {
         }
         
         return value
+    }
+    
+    private func handlerParseError(_ error: Error) throws {
+        
+        if let afError = error.asAFError {
+            switch afError {
+            case .responseValidationFailed(reason: .unacceptableStatusCode(let code)):
+                if code == 429 {
+                    throw APIError.tooManyRequests
+                }
+
+            default:
+                break
+            }
+
+            if let urlError = afError.underlyingError as? URLError {
+                
+                switch urlError.code {
+                case .notConnectedToInternet:
+                    throw APIError.notInternet
+                default:
+                    throw error
+                    
+                }
+            }
+        }
+    
+        throw error
+        
     }
 }

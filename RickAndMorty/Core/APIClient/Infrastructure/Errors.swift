@@ -10,6 +10,7 @@ import Foundation
 enum APIError: Error, LocalizedError {
     case invalidFormat
     case emptyResponse
+    case tooManyRequests
     case notInternet
     
     var errorDescription: String? {
@@ -20,6 +21,8 @@ enum APIError: Error, LocalizedError {
             return "apiError_empty_response".localized
         case .notInternet:
             return "apiError_not_intenet_message".localized
+        case .tooManyRequests:
+            return "apiError_too_many_request".localized;
         }
     }
 }
