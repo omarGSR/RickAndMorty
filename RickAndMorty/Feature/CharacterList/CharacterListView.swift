@@ -35,7 +35,16 @@ struct CharacterListView: View {
             
             List {
                 ForEach(viewModel.characters) { character in
-                    CharacterRowView(character: character)
+                    
+                    NavigationLink {
+                        #warning("TODO: replace with proper VM container")
+                        let vm = DetailCharacterVM(character: character)
+                        
+                        DetailCharacterView(viewModel: vm)
+                        
+                    } label: {
+                        CharacterRowView(character: character)
+                    }
                 }
                 
                 footerListPagination
