@@ -48,6 +48,9 @@ nonisolated struct Character: Identifiable, Sendable, Hashable {
     }
     
     let syncronizedDate: Date
+    var displaySyncronized: String {
+        return DateParserFormatter.prettyDate.string(from: syncronizedDate)
+    }
     
     init(id: Int,
          name: String,
