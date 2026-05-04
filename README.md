@@ -38,7 +38,7 @@ And to prevent delays in App Store releases, the app will be developed and deliv
 - RM-4: SwiftData persistence (Manager+Migration+first entities)
 - RM-5: Cached images
 - RM-6: List characters
-- RM-7: Characters pagination + UI
+    - RM-7: Characters pagination + UI
 - RM-8: Detail character
 
 - 🚀 RELEASE-1: Version 1.0 - List and Detail
