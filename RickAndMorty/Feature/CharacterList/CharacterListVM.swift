@@ -14,12 +14,17 @@ final class CharacterListVM {
     enum CharacterListState {
         case idle
         case fetchFirstRemote
+        
         case showList
-        case notInternet
+        
+        case errorStateView // includes not internet
     }
     
     var characters: [Character] = []
     var stateView: CharacterListState = .idle
+    
+    @ObservationIgnored
+    var errorFirstEvaluate: Error?
     
     private var characterRepository: CharacterRepository
     
@@ -27,8 +32,14 @@ final class CharacterListVM {
         self.characterRepository = characterRepository
     }
     
-    func loadInitialValues() async {
-
+    func loadInitialValues(isRetry: Bool = false) async {
+        
+        stateView = .idle
+        
+        if isRetry {
+            try? await Task.sleep(for: .seconds(0.5))
+        }
+        
         do {
             characters = try await characterRepository.localCharacters()
             
@@ -38,7 +49,8 @@ final class CharacterListVM {
                 stateView = .showList
             }
         } catch {
-            print(error)
+            errorFirstEvaluate = error
+            stateView = .errorStateView
         }
     }
     
@@ -49,7 +61,8 @@ final class CharacterListVM {
             characters = pageResults.items
             stateView = .showList
         } catch {
-            print(error)
+            errorFirstEvaluate = error
+            stateView = .errorStateView
         }
     }
 }

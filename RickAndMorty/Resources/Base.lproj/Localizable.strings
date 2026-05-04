@@ -1,12 +1,12 @@
 // Base strings (EN)
 
-//g: generals
+//g: GENERAL----------------
 "gOK" = "OK";
 "gCancel" = "Cancel";
 "gUnknown" = "Unknown";
 "gRetry" = "Retry";
 
-//errors:
+//ERRORS--------------
 "gError_description" = "Something went wrong";
 "gError_title" = "Error";
 
@@ -17,7 +17,7 @@
 "apiError_not_intenet_message" = "Please check your connection and try again";
 "apiError_invalid_url" = "Invalid url";
 
-// MODELS --------------------
+// MODELS--------------------
 // chm: Character_Model
 "chm_status_alive" = "Alive";
 "chm_status_dead" = "Dead";
@@ -25,3 +25,7 @@
 "chm_gender_female" = "Female";
 "chm_gender_male" = "Male";
 "chm_gender_genderless" = "Genderless";
+
+// SCREENS_TEXT -------------
+// clv: Character_list_view
+"clv_title" = "Rick And Morty";

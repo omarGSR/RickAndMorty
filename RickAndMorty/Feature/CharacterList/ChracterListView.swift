@@ -18,7 +18,7 @@ struct CharacterListView: View {
     var body: some View {
         NavigationStack {
             content
-                .navigationTitle("_Rick And Morty")
+                .navigationTitle("clv_title")
         }
         .onAppear {
             Task {
@@ -26,7 +26,7 @@ struct CharacterListView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private var content: some View {
         switch viewModel.stateView {
@@ -38,15 +38,21 @@ struct CharacterListView: View {
                 }
             }
             
+        case .idle, .fetchFirstRemote:
             
-        case .idle:
-            Text("inital empty")
-        case .fetchFirstRemote:
-            Text("need to fetch")
-        case .notInternet:
-            Text("not internet")
+            ProgressViewWapper()
+            
+        case .errorStateView:
+            
+            StateViewFeedback(
+                error: viewModel.errorFirstEvaluate,
+                buttonTitle: "gRetry".localized
+            ) {
+                Task {
+                    await viewModel.loadInitialValues(isRetry: true)
+                }
+            }
+            .padding(Spacing.regular)
         }
-        
-        
     }
 }
