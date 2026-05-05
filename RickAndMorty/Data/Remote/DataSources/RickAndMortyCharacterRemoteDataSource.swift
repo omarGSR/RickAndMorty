@@ -16,5 +16,8 @@ final class RickAndMortyCharacterRemoteDataSource: CharacterRemoteDataSource {
     func fetchCharacter(page: Int) async throws -> CharactersResponseDTO {
         try await apiClient.request(.characters(page: page))
     }
+    
+    func fetchCharacter(id: Int) async throws -> CharacterDTO {
+        try await apiClient.request(.character(id: id))
+    }
 }
-

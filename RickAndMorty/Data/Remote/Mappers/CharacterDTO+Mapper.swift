@@ -23,6 +23,25 @@ extension CharacterDTO {
                   createdDate: DateParserFormatter.iso8601.date(from: created),
                   syncronizedDate: Date())
     }
+   
+    
+    /// only to evaluate changes on UI
+    func toDomainDEVTestUISync() -> Character {
+        
+        let currentHourString: String = Date().formatted(date: .omitted, time: .shortened)
+        return Character(id: id,
+                         name: name + " -> manual sync \(currentHourString)",
+                         statusRaw: status,
+                         species: species,
+                         type: type,
+                         genderRaw: gender,
+                         origin: origin.toDomain(),
+                         location: location.toDomain(),
+                         imageURL: URL(string: image),
+                         episodeIDs: episode.compactMap(\.lastPathComponentInt),
+                         createdDate: DateParserFormatter.iso8601.date(from: created),
+                         syncronizedDate: Date())
+    }
 }
 
 private extension CharacterLocationDTO {

@@ -34,6 +34,7 @@ struct CharacterListView: View {
         .errorAlert(error: $viewModel.errorAlert)
         .onAppear {
             Task {
+                guard viewModel.stateView == .idle else { return }
                 await viewModel.loadInitialValues()
             }
         }
@@ -58,13 +59,15 @@ struct CharacterListView: View {
         case .showList:
             
                 List {
-                    ForEach(viewModel.filteredCharacters) { character in
+                    ForEach(viewModel.filteredCharacters, id: \.listIdentify) { character in
                         
                         NavigationLink {
                             
                             DetailCharacterView(
                                 viewModel: AppContainer.shared.makeDetailCharacterVM(character: character)
-                            )
+                            ) { updatedCharacter in
+                                viewModel.updateCharacter(updatedCharacter)
+                            }
                             
                         } label: {
                             CharacterRowView(character: character)

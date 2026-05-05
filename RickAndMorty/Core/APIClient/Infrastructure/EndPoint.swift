@@ -15,6 +15,7 @@ enum Endpoint {
                 retries: Int = 0)
     
     case characters(page: Int)
+    case character(id: Int)
     
     var path: String {
         switch self {
@@ -22,12 +23,15 @@ enum Endpoint {
             return ""
         case .characters:
             return "/api/character"
+        case .character(let id):
+            return "/api/character/\(id)"
         }
     }
     
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .custom:
+        case .custom,
+                .character:
             return nil
         case .characters(page: let page):
             return [
@@ -47,7 +51,8 @@ enum Endpoint {
         switch self {
         case .custom(_, let customMethod, _,_):
             return customMethod
-        case .characters:
+        case .characters,
+                .character:
             return .get
         }
     }
@@ -55,7 +60,7 @@ enum Endpoint {
     var retries: Int {
         switch self {
         case .custom(_,_,_, let totalRetries): return totalRetries
-        case .characters: return 1
+        default: return 1
         }
     }
     
@@ -79,4 +84,3 @@ enum Endpoint {
         return url
     }
 }
-

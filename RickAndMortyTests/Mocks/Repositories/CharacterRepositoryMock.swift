@@ -14,10 +14,12 @@ final class CharacterRepositoryMock: CharacterRepository {
     var fetchCharacterResult: Result<PageResults<Character>, Error> = .success(
         PageResults(pageInfo: nil, items: [])
     )
+    var syncCharacterResult: Result<Character, Error> = .success(.mock())
     
     private(set) var localCharactersCallCount = 0
     private(set) var localCharactersPageInfoCallCount = 0
     private(set) var receivedPages: [Int] = []
+    private(set) var receivedSyncIDs: [Int] = []
     
     func localCharacters() async throws -> [Character] {
         localCharactersCallCount += 1
@@ -32,5 +34,10 @@ final class CharacterRepositoryMock: CharacterRepository {
     func fetchCharacter(page: Int) async throws -> PageResults<Character> {
         receivedPages.append(page)
         return try fetchCharacterResult.get()
+    }
+    
+    func syncCharacter(id: Int) async throws -> Character {
+        receivedSyncIDs.append(id)
+        return try syncCharacterResult.get()
     }
 }

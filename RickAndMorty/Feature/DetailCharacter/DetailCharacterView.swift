@@ -10,11 +10,14 @@ import SwiftUI
 struct DetailCharacterView: View {
     
     @State var viewModel: DetailCharacterVM
+    let onCharacterSyncronized: (Character) -> Void
     
     let verticalSectionSpacing: CGFloat = Spacing.quarter
     
-    init(viewModel: DetailCharacterVM) {
+    init(viewModel: DetailCharacterVM,
+         onCharacterSyncronized: @escaping (Character) -> Void = { _ in }) {
         _viewModel = State(initialValue: viewModel)
+        self.onCharacterSyncronized = onCharacterSyncronized
     }
     
     var body: some View {
@@ -30,6 +33,7 @@ struct DetailCharacterView: View {
             
             Spacer()
         }
+        .errorAlert(error: $viewModel.errorAlert)
     }
     
     private var header: some View {
@@ -113,11 +117,20 @@ struct DetailCharacterView: View {
             VStack(alignment: .center, spacing: verticalSectionSpacing) {
                 
                 Spacer()
-                Button("sync") {
-                    
+                
+                if viewModel.isSyncing {
+                    LoadingSpinner()
+                } else {
+                    Button("sync") {
+                        Task {
+                            if let updatedCharacter = await viewModel.syncronize() {
+                                onCharacterSyncronized(updatedCharacter)
+                            }
+                        }
+                    }
+                    .disabled(!viewModel.needSyncFromServer)
+                    .buttonStyle(.borderedProminent)
                 }
-                .disabled(!viewModel.needSyncFromServer)
-                .buttonStyle(.borderedProminent)
             }
             .padding(.leading, Spacing.regular)
             
@@ -147,7 +160,8 @@ struct DetailCharacterView: View {
                               createdDate: Date(),
                               syncronizedDate: Date())
     
-    let vm = DetailCharacterVM(character: character)
+    let vm = AppContainer.shared.makeDetailCharacterVM(character: character)
+    
     DetailCharacterView(viewModel: vm)
     Spacer()
 }
