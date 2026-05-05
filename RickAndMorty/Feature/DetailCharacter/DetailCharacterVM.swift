@@ -70,8 +70,9 @@ final class DetailCharacterVM {
         self.characterRepository = characterRepository
     }
     
-    func syncronize() async {
-        guard !isSyncing else { return }
+    @discardableResult
+    func syncronize() async -> Character? {
+        guard !isSyncing else { return nil }
         
         isSyncing = true
         defer {
@@ -79,10 +80,13 @@ final class DetailCharacterVM {
         }
         
         do {
-            character = try await characterRepository.syncCharacter(id: character.id)
+            let updatedCharacter = try await characterRepository.syncCharacter(id: character.id)
+            character = updatedCharacter
+            return updatedCharacter
         }
         catch {
             errorAlert = error
+            return nil
         }
     }
 }
