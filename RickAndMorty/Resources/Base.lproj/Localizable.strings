@@ -38,6 +38,11 @@
 "clv_title" = "Rick And Morty";
 "clv_load_more_pages" = "Load more";
 
+"clv_empty_result_title" = "No results";
+"clv_empty_result_description" = "There are no characters in the local database matching your search.\n\nNote: Search is not applied on the server.";
+
+"clv_searchBar_placeholder" = "Search by name, status or species";
+
 // cdv: Character_detail_view
 "cdv_info_section" = "Information";
 "cdv_location_section" = "Location";

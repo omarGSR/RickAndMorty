@@ -12,13 +12,15 @@ extension Character {
     
     static func mock(
         id: Int = 1,
-        name: String = "Rick Sanchez"
+        name: String = "Rick Sanchez",
+        statusRaw: String = "Alive",
+        species: String = "Human"
     ) -> Character {
         Character(
             id: id,
             name: name,
-            statusRaw: "Alive",
-            species: "Human",
+            statusRaw: statusRaw,
+            species: species,
             type: nil,
             genderRaw: "Male",
             origin: CharacterPlace(name: "Earth (C-137)", id: 1),

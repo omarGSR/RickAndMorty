@@ -28,6 +28,19 @@ struct SubheadlineStyle: ViewModifier {
 }
 
 extension View {
+    
+    @ViewBuilder
+    func `if`<Content: View>(_ condition: Bool,
+                             transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+    
+    // MARK: - For Text helper
+    
     func titleItemStyle(color: Color = .primary) -> some View {
         modifier(HeadlineStyle(color: color))
     }

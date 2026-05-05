@@ -21,9 +21,9 @@ struct StateViewFeedback: View {
          action: (() -> Void)?) {
         
         self.icon = icon
-        self.title = title
-        self.message = message
-        self.buttonTitle = buttonTitle
+        self.title = title.localized
+        self.message = message?.localized
+        self.buttonTitle = buttonTitle?.localized
         self.action = action
     }
     
@@ -49,7 +49,7 @@ struct StateViewFeedback: View {
             }
             
             Text(title)
-                .font(.title3)
+                .font(.headline)
                 .bold()
             
             if let message {

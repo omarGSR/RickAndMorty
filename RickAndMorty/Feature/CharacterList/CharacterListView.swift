@@ -19,6 +19,17 @@ struct CharacterListView: View {
         NavigationStack {
             content
                 .navigationTitle("clv_title")
+            
+                .if(viewModel.characters.isEmpty == false) { view in
+                    view.searchable(
+                        text: $viewModel.searchText,
+                        placement: .sidebar,
+                        prompt: "clv_searchBar_placeholder"
+                    )
+                    .onChange(of: viewModel.searchText) { _, newValue in
+                        viewModel.onSearchTextChanged(newValue)
+                    }
+                }
         }
         .errorAlert(error: $viewModel.errorAlert)
         .onAppear {
@@ -31,24 +42,39 @@ struct CharacterListView: View {
     @ViewBuilder
     private var content: some View {
         switch viewModel.stateView {
+            
+        case .noSearchResults:
+            
+            StateViewFeedback(
+                icon: "person.slah",
+                title: "clv_empty_result_title",
+                message: "clv_empty_result_description",
+                buttonTitle: nil,
+                action: nil)
+            .padding(Spacing.regular)
+            .padding(.top, Spacing.double)
+            Spacer()
+            
         case .showList:
             
-            List {
-                ForEach(viewModel.characters) { character in
+                List {
+                    ForEach(viewModel.filteredCharacters) { character in
+                        
+                        NavigationLink {
+                            
+                            DetailCharacterView(
+                                viewModel: AppContainer.shared.makeDetailCharacterVM(character: character)
+                            )
+                            
+                        } label: {
+                            CharacterRowView(character: character)
+                        }
+                    }
                     
-                    NavigationLink {
-                        #warning("TODO: replace with proper VM container")
-                        let vm = DetailCharacterVM(character: character)
-                        
-                        DetailCharacterView(viewModel: vm)
-                        
-                    } label: {
-                        CharacterRowView(character: character)
+                    if !viewModel.isSearching {
+                        footerListPagination
                     }
                 }
-                
-                footerListPagination
-            }
             
         case .idle, .fetchFirstRemote:
             

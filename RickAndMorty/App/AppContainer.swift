@@ -80,6 +80,14 @@ final class AppContainer {
             networkMonitor: networkMonitor)
     }
     
+    func makeDetailCharacterVM(character: Character) -> DetailCharacterVM {
+        DetailCharacterVM(character: character)
+        // for version updating character we will need:
+        //   characterRepository: makeCharacterRepository(),
+        //   networkMonitor: networkMonitor)
+        
+    }
+    
     // MARK: - Make repositories / Datasources
     
     func makeCharacterRepository() -> CharacterRepository {
