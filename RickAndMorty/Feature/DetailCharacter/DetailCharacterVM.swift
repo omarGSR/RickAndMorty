@@ -25,19 +25,25 @@ final class DetailCharacterVM {
         "chm_display_gender".localized([character.gender.display])
     }
     var displaySyncronizedAt: String {
-        "chm_display_syncronized_at".localized([character.displaySyncronized])
+        "chm_display_syncronized_at"
+            .localized([character.displaySyncronized])
     }
     
     var displayOriginLocation: String { character.origin.name }
     var displayCurrentLocation: String { character.location.name}
     
     var displayCreatedAt: String {
-        "chm_display_created_at".localized([character.displayCreated])
+        "chm_display_created_at"
+            .localized([character.displayCreated])
     }
     
-    var displayParticipatedEpisodes: String { "chm_display_participated_episodes".localized([character.episodeIDs.count])
+    var displayParticipatedEpisodes: String {
+        "chm_display_participated_episodes"
+            .localized([character.episodeIDs.count])
     }
     
+    var errorAlert: Error?
+    var isSyncing: Bool = false
     
     
     var needSyncFromServer: Bool {
@@ -62,5 +68,21 @@ final class DetailCharacterVM {
         self.character = character
         self.networkMonitor = networkMonitor
         self.characterRepository = characterRepository
+    }
+    
+    func syncronize() async {
+        guard !isSyncing else { return }
+        
+        isSyncing = true
+        defer {
+            isSyncing = false
+        }
+        
+        do {
+            character = try await characterRepository.syncCharacter(id: character.id)
+        }
+        catch {
+            errorAlert = error
+        }
     }
 }
