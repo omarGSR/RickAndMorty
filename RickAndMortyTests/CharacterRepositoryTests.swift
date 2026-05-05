@@ -53,4 +53,27 @@ final class RickAndMortyCharacterRepositoryTests: XCTestCase {
             XCTAssertNil(localDataSource.savedPageInfo)
         }
     }
+    
+    func testSyncCharacterWhenRemoteSucceedsSavesAndReturnsCharacter() async throws {
+        let remoteDataSource = CharacterRemoteDataSourceMock(
+            response: .success(.mock()),
+            characterResponse: .success(.mock())
+        )
+        let localDataSource = PersistenceDataSourceMock()
+        let sut = RickAndMortyCharacterRepository(
+            remoteDataSource: remoteDataSource,
+            localDataSource: localDataSource
+        )
+        
+        let currentHourString: String = Date().formatted(date: .omitted, time: .shortened)
+        let suffix = " -> manual sync \(currentHourString)"
+        
+        let result = try await sut.syncCharacter(id: 1)
+        
+        XCTAssertEqual(remoteDataSource.receivedIDs, [1])
+        XCTAssertEqual(result.id, 1)
+        XCTAssertEqual(result.name, "Rick Sanchez\(suffix)")
+        XCTAssertEqual(localDataSource.savedCharacters.map(\.id), [1])
+        XCTAssertNil(localDataSource.savedPageInfo)
+    }
 }

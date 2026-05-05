@@ -144,6 +144,14 @@ final class CharacterListVM {
         await fetchRemotePage(context: .next)
     }
     
+    func updateCharacter(_ updatedCharacter: Character) {
+        
+        guard let index = characters.firstIndex(where: { $0 == updatedCharacter }) else { return }
+        characters[index] = updatedCharacter
+        
+        refreshSearchStateForSearch()
+    }
+    
     private func fetchRemotePage(context: FetchPageContext) async {
         
         guard let nextPage else { return }

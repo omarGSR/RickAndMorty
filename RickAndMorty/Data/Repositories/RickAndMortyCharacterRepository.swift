@@ -31,6 +31,21 @@ final class RickAndMortyCharacterRepository: CharacterRepository {
         return pageResult
     }
     
+    func syncCharacter(id: Int) async throws -> Character {
+        
+        let characterDTO = try await remoteDataSource.fetchCharacter(id: id)
+        
+#if DEBUG
+        // just to check changes UI quick
+        let character = characterDTO.toDomainDEVTestUISync()
+#else
+        let character = characterDTO.toDomain()
+#endif
+        
+        try await localDataSource.saveCharacters([character])
+        return character
+    }
+    
     func localCharacters() async throws -> [Character] {
         try await localDataSource.getCharacters()
     }
