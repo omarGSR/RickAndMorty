@@ -33,6 +33,7 @@ struct DetailCharacterView: View {
             
             Spacer()
         }
+        .errorAlert(error: $viewModel.errorAlert)
     }
     
     private var header: some View {
