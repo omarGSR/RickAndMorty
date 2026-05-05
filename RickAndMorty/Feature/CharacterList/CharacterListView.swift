@@ -19,13 +19,16 @@ struct CharacterListView: View {
         NavigationStack {
             content
                 .navigationTitle("clv_title")
-                .searchable(
-                    text: $viewModel.searchText,
-                    placement: .navigationBarDrawer(displayMode: .always),
-                    prompt: "_search by name, status, species"
-                )
-                .onChange(of: viewModel.searchText) { _, newValue in
-                    viewModel.onSearchTextChanged(newValue)
+            
+                .if(viewModel.characters.isEmpty == false) { view in
+                    view.searchable(
+                        text: $viewModel.searchText,
+                        placement: .sidebar,
+                        prompt: "clv_searchBar_placeholder"
+                    )
+                    .onChange(of: viewModel.searchText) { _, newValue in
+                        viewModel.onSearchTextChanged(newValue)
+                    }
                 }
         }
         .errorAlert(error: $viewModel.errorAlert)
