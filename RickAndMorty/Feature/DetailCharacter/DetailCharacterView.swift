@@ -113,11 +113,18 @@ struct DetailCharacterView: View {
             VStack(alignment: .center, spacing: verticalSectionSpacing) {
                 
                 Spacer()
-                Button("sync") {
-                    
+                
+                if viewModel.isSyncing {
+                    LoadingSpinner()
+                } else {
+                    Button("sync") {
+                        Task {
+                            await viewModel.syncronize()
+                        }
+                    }
+                    .disabled(!viewModel.needSyncFromServer)
+                    .buttonStyle(.borderedProminent)
                 }
-                .disabled(!viewModel.needSyncFromServer)
-                .buttonStyle(.borderedProminent)
             }
             .padding(.leading, Spacing.regular)
             
