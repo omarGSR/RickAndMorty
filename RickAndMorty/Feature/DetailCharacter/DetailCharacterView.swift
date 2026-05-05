@@ -147,7 +147,8 @@ struct DetailCharacterView: View {
                               createdDate: Date(),
                               syncronizedDate: Date())
     
-    let vm = DetailCharacterVM(character: character)
+    let vm = AppContainer.shared.makeDetailCharacterVM(character: character)
+    
     DetailCharacterView(viewModel: vm)
     Spacer()
 }

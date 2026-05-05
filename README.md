@@ -51,6 +51,8 @@ And to prevent delays in App Store releases, the app will be developed and deliv
 
 - 🚀 RELEASE-2: Version 1.1 - Local Search characters
 
+- RM-11: Syncronize/update info character from server 
+
 ## API
 
 All API information: https://rickandmortyapi.com

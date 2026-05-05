@@ -41,15 +41,26 @@ final class DetailCharacterVM {
     
     
     var needSyncFromServer: Bool {
-#warning("TODO: for other version update character just to know if something has changes (episodes, status{dead},..)")
+#if DEBUG
+        let minutes: Int = 5
+        let timeInterval = TimeInterval(minutes * 60)
+#else
         let daysToUpdate: Int = 30
-        let timeInterval = TimeInterval(daysToUpdate * 3600 * 3600 * 24)
-        // remove hardcode value when implementation are ready
-        return false
+        let timeInterval = TimeInterval(daysToUpdate * 3600 * 24)
+#endif
+        
         return character.syncronizedDate.addingTimeInterval(timeInterval) < Date()
     }
     
-    init(character: Character) {
+    let networkMonitor: NetworkMonitoring
+    let characterRepository: CharacterRepository
+    
+    init(character: Character,
+         characterRepository: CharacterRepository,
+         networkMonitor: NetworkMonitoring) {
+        
         self.character = character
+        self.networkMonitor = networkMonitor
+        self.characterRepository = characterRepository
     }
 }
