@@ -62,6 +62,9 @@ final class AlamofireAPIClient: APIClient {
             throw APIError.notInternet
         }
         #endif
+     
+        // uncomment this to check spineers timers, and updates
+        //  try? await Task.sleep(for: .seconds(1))
                 
         let url: URL = try endpoint.makeURL(for: environment.baseURL)
         let timeout: TimeInterval = endpoint.timeout.value
