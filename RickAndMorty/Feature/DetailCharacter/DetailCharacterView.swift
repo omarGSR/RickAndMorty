@@ -10,11 +10,14 @@ import SwiftUI
 struct DetailCharacterView: View {
     
     @State var viewModel: DetailCharacterVM
+    let onCharacterSyncronized: (Character) -> Void
     
     let verticalSectionSpacing: CGFloat = Spacing.quarter
     
-    init(viewModel: DetailCharacterVM) {
+    init(viewModel: DetailCharacterVM,
+         onCharacterSyncronized: @escaping (Character) -> Void = { _ in }) {
         _viewModel = State(initialValue: viewModel)
+        self.onCharacterSyncronized = onCharacterSyncronized
     }
     
     var body: some View {
@@ -119,7 +122,9 @@ struct DetailCharacterView: View {
                 } else {
                     Button("sync") {
                         Task {
-                            await viewModel.syncronize()
+                            if let updatedCharacter = await viewModel.syncronize() {
+                                onCharacterSyncronized(updatedCharacter)
+                            }
                         }
                     }
                     .disabled(!viewModel.needSyncFromServer)

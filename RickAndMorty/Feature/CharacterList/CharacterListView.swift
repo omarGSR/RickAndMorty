@@ -64,7 +64,9 @@ struct CharacterListView: View {
                             
                             DetailCharacterView(
                                 viewModel: AppContainer.shared.makeDetailCharacterVM(character: character)
-                            )
+                            ) { updatedCharacter in
+                                viewModel.updateCharacter(updatedCharacter)
+                            }
                             
                         } label: {
                             CharacterRowView(character: character)
