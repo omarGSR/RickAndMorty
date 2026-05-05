@@ -6,6 +6,7 @@
 //
 
 import Observation
+import Foundation
 
 @MainActor
 @Observable
@@ -16,6 +17,7 @@ final class CharacterListVM {
         case fetchFirstRemote
         
         case showList
+        case noSearchResults
         
         case errorStateView // includes not internet
     }
@@ -25,11 +27,12 @@ final class CharacterListVM {
         case next
     }
     
-    var characters: [Character] = []
-    var stateView: CharacterListState = .idle
+    private(set) var characters: [Character] = []
+    private(set) var stateView: CharacterListState = .idle
     
     private var characterRepository: CharacterRepository
     private let networkMonitor: NetworkMonitoring
+    private let debouncerSearch: Debouncer = .init(timeInSeconds: 0.6)
     
     @ObservationIgnored var errorFirstEvaluate: Error?
     var errorAlert: Error?
@@ -38,6 +41,49 @@ final class CharacterListVM {
     
     var isConectionReachable: Bool {
         networkMonitor.isConnected
+    }
+    
+    // MARK: - Search filter
+    
+    var searchText: String = ""
+    var debouncedSearchText: String = ""
+    
+    var isSearching: Bool { !debouncedSearchText.isEmpty }
+    
+    var filteredCharacters: [Character] {
+        let query = debouncedSearchText
+        guard !query.isEmpty else { return characters }
+        
+        return characters.filter { character in
+            character.name.localizedCaseInsensitiveContains(query) ||
+            character.species.localizedCaseInsensitiveContains(query) ||
+            character.status.display.localizedCaseInsensitiveContains(query)
+        }
+    }
+    
+    func onSearchTextChanged(_ newValue: String) {
+        
+        if newValue.normalizedForSearch.isEmpty {
+            debouncedSearchText = ""
+            debouncerSearch.cancel()
+            refreshSearchStateForSearch()
+            return
+        }
+        
+        debouncerSearch.run { [weak self] in
+            self?.debouncedSearchText = newValue.normalizedForSearch
+            self?.refreshSearchStateForSearch()
+        }
+    }
+    
+    private func refreshSearchStateForSearch() {
+        guard stateView == .showList || stateView == .noSearchResults else { return }
+        
+        if isSearching && filteredCharacters.isEmpty {
+            stateView = .noSearchResults
+        } else {
+            stateView = .showList
+        }
     }
     
     // MARK: - About pages
