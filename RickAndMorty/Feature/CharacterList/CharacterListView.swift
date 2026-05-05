@@ -33,22 +33,24 @@ struct CharacterListView: View {
         switch viewModel.stateView {
         case .showList:
             
-            List {
-                ForEach(viewModel.characters) { character in
+                List {
+                    ForEach(viewModel.filteredCharacters) { character in
+                        
+                        NavigationLink {
+                            
+                            DetailCharacterView(
+                                viewModel: AppContainer.shared.makeDetailCharacterVM(character: character)
+                            )
+                            
+                        } label: {
+                            CharacterRowView(character: character)
+                        }
+                    }
                     
-                    NavigationLink {
-                        #warning("TODO: replace with proper VM container")
-                        let vm = DetailCharacterVM(character: character)
-                        
-                        DetailCharacterView(viewModel: vm)
-                        
-                    } label: {
-                        CharacterRowView(character: character)
+                    if !viewModel.isSearching {
+                        footerListPagination
                     }
                 }
-                
-                footerListPagination
-            }
             
         case .idle, .fetchFirstRemote:
             
