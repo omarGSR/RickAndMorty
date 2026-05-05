@@ -31,6 +31,19 @@ struct CharacterListView: View {
     @ViewBuilder
     private var content: some View {
         switch viewModel.stateView {
+            
+        case .noSearchResults:
+            
+            StateViewFeedback(
+                icon: "person.slah",
+                title: "clv_empty_result_title",
+                message: "clv_empty_result_description",
+                buttonTitle: nil,
+                action: nil)
+            .padding(Spacing.regular)
+            .padding(.top, Spacing.double)
+            Spacer()
+            
         case .showList:
             
                 List {
