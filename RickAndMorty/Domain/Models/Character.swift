@@ -12,6 +12,10 @@ nonisolated struct Character: Identifiable, Sendable, Hashable {
     let id: Int
     let name: String
     
+    var listIdentify: String {
+        "\(id)-\(syncronizedDate.timeIntervalSince1970)"
+    }
+    
     let statusRaw: String
     var status: CharacterStatus {
         CharacterStatus(rawValue: statusRaw.lowercased()) ?? .unknown
