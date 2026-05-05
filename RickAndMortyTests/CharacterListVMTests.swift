@@ -103,6 +103,85 @@ final class CharacterListVMTests: XCTestCase {
         XCTAssertTrue(repository.receivedPages.isEmpty)
     }
     
+    func testFilteredCharactersWhenSearchTextIsEmptyReturnsAllCharacters() async {
+        let repository = CharacterRepositoryMock()
+        repository.localCharactersResult = .success([.mock(id: 1), .mock(id: 2)])
+        let sut = makeSUT(repository: repository)
+        
+        await sut.loadInitialValues()
+        
+        XCTAssertEqual(sut.filteredCharacters.map(\.id), [1, 2])
+        XCTAssertFalse(sut.isSearching)
+    }
+    
+    func testFilteredCharactersIgnoresLeadingAndTrailingWhitespaces() async {
+        let repository = CharacterRepositoryMock()
+        repository.localCharactersResult = .success([
+            .mock(id: 1, name: "Rick Sanchez"),
+            .mock(id: 2, name: "Morty Smith")
+        ])
+        let sut = makeSUT(repository: repository)
+        
+        await sut.loadInitialValues()
+        await search("  morty  ", in: sut)
+        
+        XCTAssertEqual(sut.filteredCharacters.map(\.id), [2])
+        XCTAssertTrue(sut.isSearching)
+        XCTAssertState(sut.stateView, is: .showList)
+    }
+    
+    func testFilteredCharactersSearchesByNameStatusAndSpecies() async {
+        let repository = CharacterRepositoryMock()
+        repository.localCharactersResult = .success([
+            .mock(id: 1, name: "Rick Sanchez", statusRaw: "Alive", species: "Human"),
+            .mock(id: 2, name: "Birdperson", statusRaw: "Dead", species: "Alien"),
+            .mock(id: 3, name: "Summer Smith", statusRaw: "Alive", species: "Human")
+        ])
+        let sut = makeSUT(repository: repository)
+        
+        await sut.loadInitialValues()
+        await search("alien", in: sut)
+        XCTAssertEqual(sut.filteredCharacters.map(\.id), [2])
+        
+        await search("dead", in: sut)
+        XCTAssertEqual(sut.filteredCharacters.map(\.id), [2])
+        
+        await search("summer", in: sut)
+        XCTAssertEqual(sut.filteredCharacters.map(\.id), [3])
+    }
+    
+    func testSearchTextWhenNoCharactersMatchShowsNoSearchResultsState() async {
+        let repository = CharacterRepositoryMock()
+        repository.localCharactersResult = .success([
+            .mock(id: 1, name: "Rick Sanchez"),
+            .mock(id: 2, name: "Morty Smith")
+        ])
+        let sut = makeSUT(repository: repository)
+        
+        await sut.loadInitialValues()
+        await search("Beth", in: sut)
+        
+        XCTAssertTrue(sut.filteredCharacters.isEmpty)
+        XCTAssertTrue(sut.isSearching)
+        XCTAssertState(sut.stateView, is: .noSearchResults)
+    }
+    
+    func testSearchTextWhenClearedReturnsToShowListState() async {
+        let repository = CharacterRepositoryMock()
+        repository.localCharactersResult = .success([
+            .mock(id: 1, name: "Rick Sanchez")
+        ])
+        let sut = makeSUT(repository: repository)
+        
+        await sut.loadInitialValues()
+        await search("Beth", in: sut)
+        searchImmediately("", in: sut)
+        
+        XCTAssertEqual(sut.filteredCharacters.map(\.id), [1])
+        XCTAssertFalse(sut.isSearching)
+        XCTAssertState(sut.stateView, is: .showList)
+    }
+    
     private func makeSUT(
         repository: CharacterRepositoryMock = CharacterRepositoryMock(),
         isConnected: Bool = true
@@ -111,6 +190,17 @@ final class CharacterListVMTests: XCTestCase {
             characterRepository: repository,
             networkMonitor: NetworkMonitoringMock(isConnected: isConnected)
         )
+    }
+    
+    private func search(_ text: String, in sut: CharacterListVM) async {
+        sut.searchText = text
+        sut.onSearchTextChanged(text)
+        try? await Task.sleep(for: .seconds(0.7))
+    }
+    
+    private func searchImmediately(_ text: String, in sut: CharacterListVM) {
+        sut.searchText = text
+        sut.onSearchTextChanged(text)
     }
     
     private func XCTAssertState(
@@ -123,6 +213,7 @@ final class CharacterListVMTests: XCTestCase {
         case (.idle, .idle),
              (.fetchFirstRemote, .fetchFirstRemote),
              (.showList, .showList),
+             (.noSearchResults, .noSearchResults),
              (.errorStateView, .errorStateView):
             break
         default:

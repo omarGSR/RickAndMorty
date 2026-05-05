@@ -22,6 +22,12 @@ nonisolated extension String {
         )
     }
     
+    // MARK: - string
+    
+    var normalizedForSearch: String {
+        self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     // MARK: - URL components + query
     
     var lastPathComponentInt: Int? {
